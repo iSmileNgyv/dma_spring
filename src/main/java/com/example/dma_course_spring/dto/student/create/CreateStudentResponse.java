@@ -1,0 +1,16 @@
+package com.example.dma_course_spring.dto.student.create;
+
+import com.example.dma_course_spring.dto.student.BaseDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class CreateStudentResponse extends BaseDto {
+    private long id;
+    private String name;
+    private String surname;
+}
