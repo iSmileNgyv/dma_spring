@@ -5,15 +5,18 @@ import com.example.dma_course_spring.dto.student.create.CreateStudentResponse;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentResponseDto;
 import com.example.dma_course_spring.entity.StudentEntity;
+import com.example.dma_course_spring.mapper.StudentMapper;
 import com.example.dma_course_spring.repository.StudentRepository;
 import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
+    @Autowired
+    private StudentMapper studentMapper;
     private final StudentRepository studentRepository;
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -30,8 +33,6 @@ public class StudentService {
 
     public List<GetAllStudentResponseDto> getAll(@Nullable GetAllStudentRequestDto dto) {
         List<StudentEntity> response = studentRepository.findAll();
-        return response.stream()
-                .map(student -> new GetAllStudentResponseDto(student.getId(), student.getName(), student.getSurname()))
-                .collect(Collectors.toList());
+        return studentMapper.toResponseDtoList(response);
     }
 }
