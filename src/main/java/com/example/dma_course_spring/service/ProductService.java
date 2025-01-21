@@ -8,18 +8,15 @@ import com.example.dma_course_spring.dto.product.update.UpdateProductResponseDto
 import com.example.dma_course_spring.entity.ProductEntity;
 import com.example.dma_course_spring.mapper.ProductMapper;
 import com.example.dma_course_spring.repository.ProductRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
-
     public ProductService(ProductMapper productMapper, ProductRepository productRepository) {
         this.productMapper = productMapper;
         this.productRepository = productRepository;
