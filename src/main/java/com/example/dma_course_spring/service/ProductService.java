@@ -30,11 +30,10 @@ public class ProductService {
         try {
             productRepository.save(productEntity);
             response.setSuccess(true);
-            return response;
         } catch (Exception ex) {
             response.setSuccess(false);
-            return response;
         }
+        return response;
     }
 
     public UpdateProductResponseDto updateProduct(UpdateProductRequestDto dto) throws Exception {
