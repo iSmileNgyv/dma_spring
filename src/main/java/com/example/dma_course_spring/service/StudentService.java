@@ -8,18 +8,17 @@ import com.example.dma_course_spring.entity.StudentEntity;
 import com.example.dma_course_spring.mapper.StudentMapper;
 import com.example.dma_course_spring.repository.StudentRepository;
 import jakarta.annotation.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class StudentService {
-    @Autowired
-    private StudentMapper studentMapper;
+    private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     public CreateStudentResponse createStudent(CreateStudentRequestDto dto) {
