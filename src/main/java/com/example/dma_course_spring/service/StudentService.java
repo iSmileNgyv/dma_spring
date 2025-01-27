@@ -6,6 +6,8 @@ import com.example.dma_course_spring.dto.student.getAll.GetAllStudentByNameReque
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentResponseDto;
 import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
+import com.example.dma_course_spring.dto.student.update.UpdateStudentRequestDto;
+import com.example.dma_course_spring.dto.student.update.UpdateStudentResponseDto;
 import com.example.dma_course_spring.entity.StudentEntity;
 import com.example.dma_course_spring.mapper.StudentMapper;
 import com.example.dma_course_spring.repository.StudentRepository;
@@ -48,5 +50,24 @@ public class StudentService {
         if(entity.isEmpty())
             throw new Exception("Student not found");
         studentRepository.deleteById(entity.get().getId());
+    }
+
+    public UpdateStudentResponseDto updateStudent(UpdateStudentRequestDto request) throws Exception{
+        var entity = studentRepository.findById(request.getId());
+        if(entity.isEmpty())
+            throw new Exception("Student not found");
+        var student = entity.get();
+        student.setId(request.getId());
+        student.setName(request.getName());
+        student.setSurname(request.getSurname());
+        student.setGender(request.getGender());
+        studentRepository.save(student);
+
+        return new UpdateStudentResponseDto(
+                student.getId(),
+                student.getName(),
+                student.getSurname(),
+                student.getGender()
+        );
     }
 }
