@@ -6,6 +6,8 @@ import com.example.dma_course_spring.dto.student.getAll.GetAllStudentByNameReque
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentResponseDto;
 import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
+import com.example.dma_course_spring.dto.student.update.UpdateStudentRequestDto;
+import com.example.dma_course_spring.dto.student.update.UpdateStudentResponseDto;
 import com.example.dma_course_spring.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +45,10 @@ public class StudentController {
     @DeleteMapping
     public void removeStudent(@RequestBody RemoveStudentRequestDto request) throws Exception {
         studentService.removeStudent(request);
+    }
+
+    @PutMapping
+    public UpdateStudentResponseDto updateStudent(@RequestBody UpdateStudentRequestDto request) throws Exception {
+        return studentService.updateStudent(request);
     }
 }
