@@ -2,8 +2,10 @@ package com.example.dma_course_spring.service;
 
 import com.example.dma_course_spring.dto.student.create.CreateStudentRequestDto;
 import com.example.dma_course_spring.dto.student.create.CreateStudentResponse;
+import com.example.dma_course_spring.dto.student.getAll.GetAllStudentByNameRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentResponseDto;
+import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
 import com.example.dma_course_spring.entity.StudentEntity;
 import com.example.dma_course_spring.mapper.StudentMapper;
 import com.example.dma_course_spring.repository.StudentRepository;
@@ -25,13 +27,26 @@ public class StudentService {
         StudentEntity entity = new StudentEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
+        entity.setGender(dto.getGender());
         StudentEntity response = studentRepository.save(entity);
 
-        return new CreateStudentResponse(response.getId(), response.getName(), response.getSurname());
+        return new CreateStudentResponse(response.getId(), response.getName(), response.getSurname(), response.getGender());
     }
 
     public List<GetAllStudentResponseDto> getAll(@Nullable GetAllStudentRequestDto dto) {
         List<StudentEntity> response = studentRepository.findAll();
         return studentMapper.toResponseDtoList(response);
+    }
+
+    public List<GetAllStudentResponseDto> filterByName(GetAllStudentByNameRequestDto request) {
+        List<StudentEntity> response = studentRepository.filterByName("%" + request.getName().toLowerCase() + "%");
+        return studentMapper.toResponseDtoList(response);
+    }
+
+    public void removeStudent(RemoveStudentRequestDto request) throws Exception{
+        var entity = studentRepository.findById(request.getId());
+        if(entity.isEmpty())
+            throw new Exception("Student not found");
+        studentRepository.deleteById(entity.get().getId());
     }
 }

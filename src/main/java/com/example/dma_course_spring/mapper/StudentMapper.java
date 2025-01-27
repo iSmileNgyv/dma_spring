@@ -12,9 +12,10 @@ import java.util.List;
 public class StudentMapper {
     private GetAllStudentResponseDto toResponseDto(StudentEntity student) {
         return GetAllStudentResponseDto.builder()
-                //.id(student.getId())
+                .id(student.getId())
                 .name(student.getName())
                 .surname(student.getSurname())
+                .gender(student.getGender())
                 .build();
     }
 

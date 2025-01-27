@@ -2,8 +2,10 @@ package com.example.dma_course_spring.controller;
 
 import com.example.dma_course_spring.dto.student.create.CreateStudentRequestDto;
 import com.example.dma_course_spring.dto.student.create.CreateStudentResponse;
+import com.example.dma_course_spring.dto.student.getAll.GetAllStudentByNameRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentRequestDto;
 import com.example.dma_course_spring.dto.student.getAll.GetAllStudentResponseDto;
+import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
 import com.example.dma_course_spring.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +33,15 @@ public class StudentController {
     @GetMapping("all")
     public List<GetAllStudentResponseDto> getAll() {
         return studentService.getAll(null);
+    }
+
+    @GetMapping("filter")
+    public List<GetAllStudentResponseDto> filterByName(@ModelAttribute GetAllStudentByNameRequestDto request) {
+        return studentService.filterByName(request);
+    }
+
+    @DeleteMapping
+    public void removeStudent(@RequestBody RemoveStudentRequestDto request) throws Exception {
+        studentService.removeStudent(request);
     }
 }
