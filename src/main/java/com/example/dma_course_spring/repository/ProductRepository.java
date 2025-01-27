@@ -1,6 +1,6 @@
 package com.example.dma_course_spring.repository;
 
-import com.example.dma_course_spring.dto.product.getAll.GetGroupByPrice;
+import com.example.dma_course_spring.dto.product.getAll.GetGroupByPriceResponseDto;
 import com.example.dma_course_spring.dto.product.getAll.GetNamePriceResponseDto;
 import com.example.dma_course_spring.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,8 +29,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query(value="SELECT AVG(p.price) FROM ProductEntity p")
     Double averagePrice();
 
-    @Query(value="SELECT new com.example.dma_course_spring.dto.product.getAll.GetGroupByPrice(COUNT(p.id), p.price) FROM ProductEntity p GROUP BY p.price")
-    List<GetGroupByPrice> getGroupByPrice();
+    @Query(value="SELECT new com.example.dma_course_spring.dto.product.getAll.GetGroupByPriceResponseDto(COUNT(p.id), p.price) FROM ProductEntity p GROUP BY p.price")
+    List<GetGroupByPriceResponseDto> getGroupByPrice();
 
     @Query(value="SELECT new com.example.dma_course_spring.dto.product.getAll.GetNamePriceResponseDto(p.name, p.price) FROM ProductEntity p")
     List<GetNamePriceResponseDto> getNamePrice();

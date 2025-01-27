@@ -5,7 +5,6 @@ import com.example.dma_course_spring.dto.product.create.CreateProductResponseDto
 import com.example.dma_course_spring.dto.product.getAll.*;
 import com.example.dma_course_spring.dto.product.update.UpdateProductRequestDto;
 import com.example.dma_course_spring.dto.product.update.UpdateProductResponseDto;
-import com.example.dma_course_spring.entity.ProductEntity;
 import com.example.dma_course_spring.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +66,7 @@ public class ProductController {
     }
 
     @GetMapping("groupByPrice")
-    public List<GetGroupByPrice> groupByPrice() {
+    public List<GetGroupByPriceResponseDto> groupByPrice() {
         return productService.getGroupByPrice();
     }
 

@@ -96,7 +96,7 @@ public class ProductService {
         return new GetAveragePriceResponseDto(avg);
     }
 
-    public List<GetGroupByPrice> getGroupByPrice() {
+    public List<GetGroupByPriceResponseDto> getGroupByPrice() {
         return productRepository.getGroupByPrice();
     }
 

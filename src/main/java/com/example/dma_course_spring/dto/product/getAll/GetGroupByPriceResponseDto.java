@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetGroupByPrice {
+public class GetGroupByPriceResponseDto {
     private Long total;
     private Double price;
 }
