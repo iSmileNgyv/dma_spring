@@ -15,4 +15,5 @@ public class CreateStudentResponse extends BaseDto {
     private String name;
     private String surname;
     private Gender gender;
+    private String courseName;
 }

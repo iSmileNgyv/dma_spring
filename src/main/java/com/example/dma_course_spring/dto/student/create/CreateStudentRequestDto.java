@@ -11,4 +11,5 @@ public class CreateStudentRequestDto extends BaseDto {
     private String name;
     private String surname;
     private Gender gender;
+    private int courseId;
 }

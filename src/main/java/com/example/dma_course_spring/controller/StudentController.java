@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public CreateStudentResponse createStudent(@RequestBody CreateStudentRequestDto dto) {
+    public CreateStudentResponse createStudent(@RequestBody CreateStudentRequestDto dto)throws Exception {
         return studentService.createStudent(dto);
     }
 

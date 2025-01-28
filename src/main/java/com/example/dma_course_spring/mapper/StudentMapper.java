@@ -16,6 +16,7 @@ public class StudentMapper {
                 .name(student.getName())
                 .surname(student.getSurname())
                 .gender(student.getGender())
+                .courseName(student.getCourseEntity().getName())
                 .build();
     }
 

@@ -15,4 +15,5 @@ public class UpdateStudentRequestDto {
     private String name;
     private String surname;
     private Gender gender;
+    private int courseId;
 }

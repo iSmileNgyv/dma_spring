@@ -10,6 +10,7 @@ import com.example.dma_course_spring.dto.student.update.UpdateStudentRequestDto;
 import com.example.dma_course_spring.dto.student.update.UpdateStudentResponseDto;
 import com.example.dma_course_spring.entity.StudentEntity;
 import com.example.dma_course_spring.mapper.StudentMapper;
+import com.example.dma_course_spring.repository.CourseRepository;
 import com.example.dma_course_spring.repository.StudentRepository;
 import jakarta.annotation.Nullable;
 import org.springframework.stereotype.Service;
@@ -20,19 +21,29 @@ import java.util.List;
 public class StudentService {
     private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    private final CourseRepository courseRepository;
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.courseRepository = courseRepository;
     }
 
-    public CreateStudentResponse createStudent(CreateStudentRequestDto dto) {
+    public CreateStudentResponse createStudent(CreateStudentRequestDto dto)throws Exception {
+        var course = courseRepository.findById(dto.getCourseId()).orElseThrow(() -> new RuntimeException("Course not found"));
         StudentEntity entity = new StudentEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
         entity.setGender(dto.getGender());
+        entity.setCourseEntity(course);
         StudentEntity response = studentRepository.save(entity);
 
-        return new CreateStudentResponse(response.getId(), response.getName(), response.getSurname(), response.getGender());
+        return new CreateStudentResponse(
+                response.getId(),
+                response.getName(),
+                response.getSurname(),
+                response.getGender(),
+                response.getCourseEntity().getName()
+        );
     }
 
     public List<GetAllStudentResponseDto> getAll(@Nullable GetAllStudentRequestDto dto) {
@@ -56,18 +67,21 @@ public class StudentService {
         var entity = studentRepository.findById(request.getId());
         if(entity.isEmpty())
             throw new Exception("Student not found");
+        var course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new RuntimeException("Course not found"));
         var student = entity.get();
         student.setId(request.getId());
         student.setName(request.getName());
         student.setSurname(request.getSurname());
         student.setGender(request.getGender());
+        student.setCourseEntity(course);
         studentRepository.save(student);
 
         return new UpdateStudentResponseDto(
                 student.getId(),
                 student.getName(),
                 student.getSurname(),
-                student.getGender()
+                student.getGender(),
+                student.getCourseEntity().getName()
         );
     }
 }

@@ -15,4 +15,5 @@ public class UpdateStudentResponseDto {
     private String name;
     private String surname;
     private Gender gender;
+    private String courseName;
 }

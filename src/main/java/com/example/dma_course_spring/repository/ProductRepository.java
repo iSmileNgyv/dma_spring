@@ -6,10 +6,11 @@ import com.example.dma_course_spring.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
     @Query(value = "SELECT p FROM ProductEntity p WHERE p.price BETWEEN :from AND :to")
     List<ProductEntity> findBetweenPrices(@Param("from") double from, @Param("to") double to);

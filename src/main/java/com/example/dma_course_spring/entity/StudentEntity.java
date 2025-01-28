@@ -16,4 +16,7 @@ public class StudentEntity {
     private String name;
     private String surname;
     private Gender gender;
+    @ManyToOne
+    @JoinColumn(name = "course_entity_id")
+    private CourseEntity courseEntity;
 }
