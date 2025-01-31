@@ -29,7 +29,7 @@ public class StudentService {
         this.courseRepository = courseRepository;
     }
 
-    public CreateStudentResponse createStudent(CreateStudentRequestDto dto)throws Exception {
+    public CreateStudentResponse createStudent(CreateStudentRequestDto dto) {
         var course = courseRepository.findById(dto.getCourseId()).orElseThrow(() -> new RuntimeException("Course not found"));
         StudentEntity entity = new StudentEntity();
         entity.setName(dto.getName());
@@ -67,7 +67,7 @@ public class StudentService {
     public UpdateStudentResponseDto updateStudent(UpdateStudentRequestDto request) throws Exception{
         var entity = studentRepository.findById(request.getId());
         if(entity.isEmpty())
-            throw new StudentNotFoundException();
+            throw new StudentNotFoundException("Student not found");
         var course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new RuntimeException("Course not found"));
         var student = entity.get();
         student.setId(request.getId());

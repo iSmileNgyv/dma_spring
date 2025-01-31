@@ -7,7 +7,6 @@ import java.util.List;
 @Getter
 @Setter
 public class ErrorResponse {
-    // GETTER METODLARI
     private final int status;
     private final String message;
     private final List<String> errors;

@@ -2,8 +2,15 @@ package com.example.dma_course_spring.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -11,6 +18,24 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBaseException(BaseException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getStatus(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getStatus()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", HttpStatus.BAD_REQUEST.value());
+        errorResponse.put("message", "Validation Error");
+
+        Map<String, List<String>> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        FieldError::getField,
+                        Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())
+                ));
+
+        errorResponse.put("errors", errors);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

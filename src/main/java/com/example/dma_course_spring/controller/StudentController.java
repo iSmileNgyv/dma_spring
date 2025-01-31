@@ -9,6 +9,7 @@ import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
 import com.example.dma_course_spring.dto.student.update.UpdateStudentRequestDto;
 import com.example.dma_course_spring.dto.student.update.UpdateStudentResponseDto;
 import com.example.dma_course_spring.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public CreateStudentResponse createStudent(@RequestBody CreateStudentRequestDto dto)throws Exception {
+    public CreateStudentResponse createStudent(@Valid  @RequestBody CreateStudentRequestDto dto)throws Exception {
         return studentService.createStudent(dto);
     }
 
