@@ -9,6 +9,7 @@ import com.example.dma_course_spring.dto.student.remove.RemoveStudentRequestDto;
 import com.example.dma_course_spring.dto.student.update.UpdateStudentRequestDto;
 import com.example.dma_course_spring.dto.student.update.UpdateStudentResponseDto;
 import com.example.dma_course_spring.entity.StudentEntity;
+import com.example.dma_course_spring.exceptions.student.StudentNotFoundException;
 import com.example.dma_course_spring.mapper.StudentMapper;
 import com.example.dma_course_spring.repository.CourseRepository;
 import com.example.dma_course_spring.repository.StudentRepository;
@@ -59,14 +60,14 @@ public class StudentService {
     public void removeStudent(RemoveStudentRequestDto request) throws Exception{
         var entity = studentRepository.findById(request.getId());
         if(entity.isEmpty())
-            throw new Exception("Student not found");
+            throw new StudentNotFoundException();
         studentRepository.deleteById(entity.get().getId());
     }
 
     public UpdateStudentResponseDto updateStudent(UpdateStudentRequestDto request) throws Exception{
         var entity = studentRepository.findById(request.getId());
         if(entity.isEmpty())
-            throw new Exception("Student not found");
+            throw new StudentNotFoundException();
         var course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new RuntimeException("Course not found"));
         var student = entity.get();
         student.setId(request.getId());

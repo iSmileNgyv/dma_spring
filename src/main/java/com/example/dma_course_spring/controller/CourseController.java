@@ -8,6 +8,8 @@ import com.example.dma_course_spring.dto.course.remove.RemoveCourseResponseDto;
 import com.example.dma_course_spring.dto.course.update.UpdateCourseRequestDto;
 import com.example.dma_course_spring.dto.course.update.UpdateCourseResponseDto;
 import com.example.dma_course_spring.service.CourseService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -36,12 +38,15 @@ public class CourseController {
     }
 
     @DeleteMapping
-    public RemoveCourseResponseDto remove(@RequestBody RemoveCourseRequestDto request){
+    public ResponseEntity<RemoveCourseResponseDto> remove(@RequestBody RemoveCourseRequestDto request){
         try {
-            return courseService.remove(request);
+            RemoveCourseResponseDto response = courseService.remove(request);
+            return ResponseEntity.ok(response);
         }catch(Exception ex) {
-            return new RemoveCourseResponseDto(ex.getMessage());
+            RemoveCourseResponseDto errorResponse = new RemoveCourseResponseDto(ex.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR) 
+                    .body(errorResponse);
         }
-
     }
 }
